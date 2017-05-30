@@ -10,6 +10,9 @@ import json
 COMMANDS = {"1"     :"Get all accounts",
             "2"     :"List all account id",
             "3"     :"Get an individual account info",
+            "4"     :"Create an account",
+            "5"     :"Update an account",
+            "6"     :"Delete an account",
             "99"    :"List commands",
             "-1"    :"Quit" }
 #NOTICE: Try to run the code with my API_KEY first, if it doesn't work then use yours
@@ -47,6 +50,7 @@ class KTB_Interface(object):
             account_id = raw_input("Please enter an account ID:")
             url = 'http://api.reimaginebanking.com/accounts/{}?key={}'.format(account_id,API_KEY)
             self.getAccountInfo(url)
+            
         #TODO: Add more options here
             
 
@@ -56,12 +60,15 @@ class KTB_Interface(object):
     def getAccountInfo(self, url, mode = ['all']):
         response = requests.get(url)
         account_list = json.loads(response.text)
-        if type(account_list) is list:
-            for account in account_list:
-                self.printAccountInfo(account, mode)
-                print "-----------------------"
+        if response.status_code == 200:
+            if type(account_list) is list:
+                for account in account_list:
+                    self.printAccountInfo(account, mode)
+                    print "-----------------------"
+            else:
+                self.printAccountInfo(account_list, mode)
         else:
-            self.printAccountInfo(account_list, mode)
+            print "Invalid Account Id"
 
 
     def printAccountInfo(self,accountDict, mode = ['all']):
