@@ -12,6 +12,7 @@ COMMANDS = {"1"     :"Get all accounts",
             "3"     :"Get an individual account info",
             "99"    :"List commands",
             "-1"    :"Quit" }
+#NOTICE: Try to run the code with my API_KEY first, if it doesn't work then use yours
 API_KEY = '6ae0131555a1884dd27093d45bc2dd9e'
 class KTB_Interface(object):
     def __init__(self):
@@ -46,6 +47,7 @@ class KTB_Interface(object):
             account_id = raw_input("Please enter an account ID:")
             url = 'http://api.reimaginebanking.com/accounts/{}?key={}'.format(account_id,API_KEY)
             self.getAccountInfo(url)
+        #TODO: Add more options here
             
 
     #Get info from account(s) based on the url and mode
