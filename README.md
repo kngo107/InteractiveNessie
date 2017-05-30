@@ -14,3 +14,17 @@ To run KTB_Interface:
 1. Make sure you have python3.0+
 2. Make sure you have all the dependencies
 3. To run use: python KTB_Interface.py
+
+
+<b>Git basics:</b>
+1. Always pull before you push
+2. git add <file> --> git commit -m "message" --> git push
+3. git status/ git checkout <file>
+<br />
+
+customer_UI.html
+Form for the customer to input information with minor error handling. 
+<br />
+TODO:
+* Retrieve customer information for data analytics
+* d3.js
