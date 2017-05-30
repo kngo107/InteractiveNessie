@@ -9,3 +9,8 @@ Todo:
 * Finish up all the command for Account
 
 IMPORTANT: PLEASE MAKE SURE YOUR CODE WORKS BEFORE PUSHING IT TO GITHUB
+
+To run KTB_Interface:
+1. Make sure you have python3.0+
+2. Make sure you have all the dependencies
+3. To run use: python KTB_Interface.py
