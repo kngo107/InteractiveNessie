@@ -22,9 +22,10 @@ To run KTB_Interface:
 3. git status/ git checkout <file>
 <br />
 
-customer_UI.html
+customer_UI.html <br />
 Form for the customer to input information with minor error handling. 
 <br />
-TODO:
+
+<b>TODO:</b>
 * Retrieve customer information for data analytics
 * d3.js
