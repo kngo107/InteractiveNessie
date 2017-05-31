@@ -75,26 +75,17 @@ class KTB_Interface(object):
 
 
     def updateAccount(self, url,update): 
+        payload = {}
         if update == "nickname":
             update_to = raw_input("Enter new nickname: ")
             payload = {
                     "nickname": update_to
                     }
-            response = requests.put(
-                    url,
-                    data=json.dumps(payload),
-                    headers={'content-type': 'application/json'},
-                    )
         elif update == "account number":
             update_to = raw_input("Enter new account number: ")
             payload = {
                     "account_number": update_to
                     }
-            response = requests.put(
-                    url,
-                    data=json.dumps(payload),
-                    headers={'content-type': 'application/json'},
-                    )
         elif update == "all":
             new_nickname = raw_input("Enter new nickname: ")
             new_accountNum = raw_input("Enter new account number: ")
@@ -102,11 +93,11 @@ class KTB_Interface(object):
                     "nickname": new_nickname,
                     "account_number": new_accountNum
                     }
-            response = requests.put(
-                    url,
-                    data=json.dumps(payload),
-                    headers={'content-type': 'application/json'},
-                    )
+        response = requests.put(
+                url,
+                data=json.dumps(payload),
+                headers={'content-type': 'application/json'},
+                )
         if response.status_code == 202:
             print "Successfully updated account"
         elif response.status_code == 404:
