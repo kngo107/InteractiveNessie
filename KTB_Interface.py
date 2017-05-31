@@ -50,9 +50,52 @@ class KTB_Interface(object):
             account_id = raw_input("Please enter an account ID:")
             url = 'http://api.reimaginebanking.com/accounts/{}?key={}'.format(account_id,API_KEY)
             self.getAccountInfo(url)
+        elif user_choice == 4:
+            print Hello
+            #TODO: Tomek's assignment
+        elif user_choice == 5:
+            #update account
+            update_id = raw_input("Enter account ID you would like to update: ")
+            url = 'http://api.reimaginebanking.com/accounts/{}?key={}'.format(update_id,API_KEY)
+            raw_update = raw_input("What object do you want to update? ('nickname', 'account number): ")
+            update = raw_update.split(',')
+            update_to = raw_input("Update to: ")
+            self.updateAccount(url,update, update_to)
+        elif user_choice == 6:
+            #delete account
+            target_id = raw_input("Enter account ID you would like to deleted ")
+            url = 'http://api.reimaginebanking.com/accounts/{}?key={}'.format(target_id,API_KEY)
+            self.deleteAccount(url)
+        
             
-        #TODO: Add more options here
-            
+    def deleteAccount(self, url):
+        response = requests.delete(url)
+        if response.status_code == 404:
+            print "Invalid ID"
+        elif response.status_code == 200:
+            print "Successfully Deleted Account"
+
+    def updateAccount(self, url,update,update_to):
+        if update == "nickname":
+            payload = {
+                    "nickname": "tesT"
+                    }
+        else:
+            payload = {
+                    "account_number": update_to
+                    }
+        response = requests.put(
+                url,
+                data=json.dumps(payload),
+                headers={'content-type' : 'application/json'},
+                )
+        if response.status_code == 202:
+            print "Successfully updated account"
+        elif response.status_code == 404:
+            print "Account does not exist"
+        elif response.status_code == 400:
+            print "Invalid fields to update"
+
 
     #Get info from account(s) based on the url and mode
     #   url : used to construct requests message   
