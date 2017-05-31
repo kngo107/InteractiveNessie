@@ -51,8 +51,19 @@ class KTB_Interface(object):
             url = 'http://api.reimaginebanking.com/accounts/{}?key={}'.format(account_id,API_KEY)
             self.getAccountInfo(url)
         elif user_choice == 4:
-            print Hello
             #TODO: Tomek's assignment
+            customer_id = raw_input("Enter the customer ID you would like to create an account for: ")
+            act_type = raw_input("Enter the account type you want to create (checking, credit card, savings): ").title()
+            act_nickname = raw_input("Please enter a nickname you would like for the account: ")
+            if act_type != "Credit Card":
+                start_balance = int(raw_input("Please enter dollar amount to open the account with (enter 0 if none): "))
+            else:
+                start_balance = 0
+            act_id = 'placeholder'
+            while len(act_id) != 16 and len(act_id) != 0:
+                act_id = raw_input("(Optional) Please enter a custom 16-digit account number, otherwise just press enter: ")
+            url = 'http://api.reimaginebanking.com/customers/{}/accounts?key={}'.format(customer_id, API_KEY)
+            self.createAccount(url, act_type, act_nickname, start_balance, act_id)
         elif user_choice == 5:
             #update account
             update_id = raw_input("Enter account ID you would like to update: ")
@@ -66,7 +77,26 @@ class KTB_Interface(object):
             url = 'http://api.reimaginebanking.com/accounts/{}?key={}'.format(target_id,API_KEY)
             self.deleteAccount(url)
         
-            
+    def createAccount(self, url, act_type, act_nickname, start_balance, act_id):
+        payload = {
+                "type": act_type,
+                "nickname": act_nickname,
+                "rewards" : 0,
+                "balance" : start_balance, }
+        if len(act_id) == 16:
+            payload["account_number"] = act_id
+        response = requests.post(
+                url,
+                data = json.dumps(payload),
+                headers = {'content-type':'application/json'}, )
+        if response.status_code == 201:
+            print 'Account Successfully Created'
+        elif response.status_code == 400:
+            print "Invalid Information Supplied"
+            #print '{}: {}'.format(response.json["message"], response.json["culprit"])
+        else:
+            print "Invalid Customer ID"
+
     def deleteAccount(self, url):
         response = requests.delete(url)
         if response.status_code == 404:
