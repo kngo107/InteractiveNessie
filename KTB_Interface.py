@@ -51,7 +51,6 @@ class KTB_Interface(object):
             url = 'http://api.reimaginebanking.com/accounts/{}?key={}'.format(account_id,API_KEY)
             self.getAccountInfo(url)
         elif user_choice == 4:
-            #TODO: Tomek's assignment
             customer_id = raw_input("Enter the customer ID you would like to create an account for: ")
             act_type = raw_input("Enter the account type you want to create (checking, credit card, savings): ").title()
             act_nickname = raw_input("Please enter a nickname you would like for the account: ")
@@ -92,7 +91,6 @@ class KTB_Interface(object):
             print 'Account Successfully Created'
         elif response.status_code == 400:
             print "Invalid Information Supplied"
-            #print '{}: {}'.format(response.json["message"], response.json["culprit"])
         else:
             print "Invalid Customer ID"
 
