@@ -68,9 +68,8 @@ class KTB_Interface(object):
             #update account
             update_id = raw_input("Enter account ID you would like to update: ")
             url = 'http://api.reimaginebanking.com/accounts/{}?key={}'.format(update_id,API_KEY)
-            update = raw_input("What object do you want to update? ('nickname', 'account number): ")
-            update_to = raw_input("Update to: ")
-            self.updateAccount(url,update, update_to)
+            update = raw_input("What object do you want to update? ('nickname', 'account number','all'): ")
+            self.updateAccount(url,update)
         elif user_choice == 6:
             #delete account
             target_id = raw_input("Enter account ID you would like to deleted ")
@@ -105,25 +104,30 @@ class KTB_Interface(object):
             print "Successfully Deleted Account"
 
 
-    def updateAccount(self, url,update,update_to):
+    def updateAccount(self, url,update): 
+        payload = {}
         if update == "nickname":
+            update_to = raw_input("Enter new nickname: ")
             payload = {
                     "nickname": update_to
                     }
-            response = requests.put(
-                    url,
-                    data=json.dumps(payload),
-                    headers={'content-type': 'application/json'},
-                    )
-        else:
+        elif update == "account number":
+            update_to = raw_input("Enter new account number: ")
             payload = {
                     "account_number": update_to
                     }
-            response = requests.put(
-                    url,
-                    data=json.dumps(payload),
-                    headers={'content-type': 'application/json'},
-                    )
+        elif update == "all":
+            new_nickname = raw_input("Enter new nickname: ")
+            new_accountNum = raw_input("Enter new account number: ")
+            payload = {
+                    "nickname": new_nickname,
+                    "account_number": new_accountNum
+                    }
+        response = requests.put(
+                url,
+                data=json.dumps(payload),
+                headers={'content-type': 'application/json'},
+                )
         if response.status_code == 202:
             print "Successfully updated account"
         elif response.status_code == 404:

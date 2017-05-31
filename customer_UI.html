@@ -7,16 +7,20 @@
   <!-- Some Basic Stylin' -->
   <style>
     body { font-family: 'Helvetica', 'Arial' }
-    div { font-family: 'Menlo', 'Courier New' }
+    div { font-family: 'Arial', 'Courier New' }
   </style>
 </head>
 <body>
-  <h1>Trying to get a Job at Cap One</h1>
-
+  <div style="color:white;background-color:blue;">
+    <br>
+    <h1>Trying to get a Job at Cap One</h1>
+	<br>
+  </div>
   <!-- HTML Layout -->
   <!-- see the JavaScript code below for logic & details -->
+  <div id="create_Customer">
   <h3>Create a Customer</h3>
-  <div>
+  
   First Name: <br>
   <input type="text" id="customerFirstName">
   <br>Last Name: <br>
@@ -32,6 +36,7 @@
   <br><br>
   <button onclick="submit()">submit</button>
   </div>
+  
   <div id="postCustomer"></div>
 
   <h3>Retrieving a Customer</h3>
