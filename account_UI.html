@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Create Account</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style>
+            body {font-family: 'Helvetica', 'Arial'}
+            div {font-family: 'Arial', 'Courier New'}
+            #account_fields {
+                margin-left:20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="color:white;background-color:blue;">
+            <br>
+            <h1>Trying to get a Job at Cap One</h1>
+            <ul class="nav nav-tabs">
+                <li><a href="./customer_UI.html">Customer</a></li>
+                <li class="active"><a href="#">Account</a></li>
+            </ul>
+        </div>
+
+        <!--Input Fields to Create an Account for a customer -->
+        <div id="account_fields">
+            <h3>Create an Account</h3>
+            
+            Customer ID: <br>
+            <input type="text" id="customerID">
+            <br>Account Type: <br>
+            <input type="text" id="accountType">
+            <br>Account nickname: <br>
+            <input type="text" id="accountNickname">
+            <br>Rewards: <br>
+            <input type="text" id="accountRewards">
+            <br>Balance: <br>
+            <input type="text" id="accountBalance">
+            <br>Account Number(optional): <br>
+            <input type="text" id="accountNumber">
+        </div>
+    </body>
+</html>
