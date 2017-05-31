@@ -6,7 +6,7 @@ Assignment for Tomek:
 * In this [Link](http://api.reimaginebanking.com/documentation#!/Account/get_accounts_id), implement POST (Create an account) under Account. 
 
 Alan:
-* Implement PUT and DELETE under accounts
+- [X] Implement PUT and DELETE under accounts
 
 
 Todo: 
