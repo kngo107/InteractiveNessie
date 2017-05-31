@@ -1,142 +1,160 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Nessie | Testing Grounds</title>
-  <!-- Nessie Required Files -->
-  <script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
-  <!-- Some Basic Stylin' -->
-  <style>
-    body { font-family: 'Helvetica', 'Arial' }
-    div { font-family: 'Arial', 'Courier New' }
-  </style>
-</head>
-<body>
-  <div style="color:white;background-color:blue;">
-    <br>
-    <h1>Trying to get a Job at Cap One</h1>
-	<br>
-  </div>
-  <!-- HTML Layout -->
-  <!-- see the JavaScript code below for logic & details -->
-  <div id="create_Customer">
-  <h3>Create a Customer</h3>
-  
-  First Name: <br>
-  <input type="text" id="customerFirstName">
-  <br>Last Name: <br>
-  <input type="text" id="customerLastName">
-  <br>Address<br>
-  <input type="text" id="customerAddress">
-  <br>City<br>
-  <input type="text" id="customerCity">
-  <br>State<br>
-  <input type="text" id="customerState">
-  <br>Zip Code<br>
-  <input type="text" id="customerZip">
-  <br><br>
-  <button onclick="submit()">submit</button>
-  </div>
-  
-  <div id="postCustomer"></div>
+    <head>
+        <title>Nessie | Create a Customer</title>
+        <!-- Nessie Required Files -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <!-- Some Basic Stylin' -->
+        <style>
+            body {
+                font-family: 'Helvetica', 'Arial';
+            }
+            div {
+                font-family: 'Arial', 'Courier New'
+            }
+            #customer_fields: {
+                margin-left:20px;
+            }
+        </style>
+    </head>
 
-  <h3>Retrieving a Customer</h3>
-  <div id="getCustomer"></div>
+    <body>
+        <!--Menu Items-->
+        <div style="color:white;background-color:blue;">
+            <br>
+            <h1>Trying to get a Job at Cap One</h1>
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#" style="color:black;">Home</a></li>
+                <li><a href="./account_UI.html">Account</a></li>
+                <li><a href="#">Purchases</a></li>
+                <li><a href="#">Data</a></li>
+            </ul>
+        </div>
 
-  <!-- API Call Examples -->
-  <script type="text/javascript">
-    // Set API key here!
-    var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
+        <!--Customer Input fields-->
+        <div id="customer_fields">
+            <h3>Create a Customer</h3>
 
-    //Global Variables
-	var customerFirstName;
-	var customerLastName;
-	var customerStreetNumber;
-	var customerStreetName;
-	var customerState;
-	var customerState;
-	var customerZip;
-	
-	
-    $(function() {
-      // set the modules being used
-      require(['customer'], function (customer) {
+            First Name: <br>
+            <input type="text" id="customerFirstName">
+            <br>Last Name: <br>
+            <input type="text" id="customerLastName">
+            <br>Address<br>
+            <input type="text" id="customerAddress">
+            <br>City<br>
+            <input type="text" id="customerCity">
+            <br>State<br>
+            <input type="text" id="customerState">
+            <br>Zip Code<br>
+            <input type="text" id="customerZip">
+            <br><br>
+            <button onclick="submit()">submit</button>
+        </div>
 
-        // initialize customer and account
-        cust = customer.initWithKey(apiKey);
-      });
-    });
+        <div id="postCustomer"></div>
+
+        <h3>Retrieving a Customer</h3>
+        <div id="getCustomer"></div>
+
+        <!-- API Call Examples -->
+        <script type="text/javascript">
+            var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
+
+            //Global Variables
+            var customerFirstName;
+            var customerLastName;
+            var customerStreetNumber;
+            var customerStreetName;
+            var customerState;
+            var customerState;
+            var customerZip;
 
 
-    function postCustomer (key, cust) {
-      // build customer data
-      var newCustDetails ="{ \"first_name\": \"" + customerFirstName + "\", \"last_name\": \"" + customerLastName + "\", \"address\": { \"street_number\": \"" +customerStreetNumber+"\", \"street_name\": \"" +customerStreetName+"\", \"city\": \""+customerCity+"\", \"state\": \""+customerState+"\", \"zip\": \""+customerZip+"\" } }";
+            $(function() {
+                // set the modules being used
+                require(['customer'], function (customer) {
 
-      // make the API call, returns response code
-      var responseCode = cust.createCustomer(newCustDetails);
+                    // initialize customer and account
+                    cust = customer.initWithKey(apiKey);
+                });
+            });
 
-      // console logging and update web page
-      console.log("[Customer - Create Customer] Response Code: " + responseCode);
-	  if(responseCode == 200)
-		$('#postCustomer').html("Create Customer: Response Code <b>" + responseCode + "</b>")
-	  else if(responseCode == 400)
-		$('#postCustomer').html("Enter valid inputs")
-    }
 
-    function getCustomer (key, cust) {
-      var allCustomers = cust.getCustomers();
-      var myCustomer = null;
+            function postCustomer (key, cust) {
+                // build customer data
+                var newCustDetails ="{ \"first_name\": \"" + customerFirstName + "\", \"last_name\": \"" + customerLastName + "\", \"address\": { \"street_number\": \"" +customerStreetNumber+"\", \"street_name\": \"" +customerStreetName+"\", \"city\": \""+customerCity+"\", \"state\": \""+customerState+"\", \"zip\": \""+customerZip+"\" } }";
 
-      // loop through all customers and log their info
-      console.log("[Customer - Get All Customers]");
-      for (var i = 0; i < allCustomers.length; i++) {
-        var firstName = allCustomers[i].first_name;
-        var lastName = allCustomers[i].last_name;
-        console.log("Customer[" + i + "]: " + firstName + " " + lastName);
+                // make the API call, returns response code
+                var responseCode = cust.createCustomer(newCustDetails);
 
-        // take note of the customer we created
-        if(firstName == customerFirstName && lastName == customerLastName) {
-          myCustomer = allCustomers[i];
-        }
-      }
+                // console logging and update web page
+                console.log("[Customer - Create Customer] Response Code: " + responseCode);
+                if(responseCode == 200)
+                    $('#postCustomer').html("Create Customer: Response Code <b>" + responseCode + "</b>")
+                else if(responseCode == 400)
+                    $('#postCustomer').html("Enter valid inputs")
+            }
 
-      // display the customer we created
-      var fullName = myCustomer.first_name + " " + myCustomer.last_name
-      console.log("[Customer - My Customer] " + fullName);
-      $('#getCustomer').html("Results: <b>" + allCustomers.length + "</b>" + " customers retrieved, please see developer console for full list.<br/>");
-      $('#getCustomer').append("My Customer: <b>" + fullName + "</b>");
-    }
-	function submit() {
-	    customerFirstName = document.getElementById("customerFirstName").value;
-		customerLastName = document.getElementById("customerLastName").value;
-		var temp = document.getElementById("customerAddress").value.split(" ");
-		customerStreetNumber = temp[0];
-		i = 1;
-		while(i < temp.length) {
-			customerStreetName += temp[i];
-			i++;
-		}
-		customerCity = document.getElementById("customerCity").value;
-		customerState = document.getElementById("customerState").value;
-		customerZip = document.getElementById("customerZip").value;
-	    // make the API Calls
-        postCustomer(apiKey, cust);
-        getCustomer(apiKey, cust);
-		clearFields();
-	}
-	function clearFields(){
-		customerFirstName = "";
-		document.getElementById("customerFirstName").value = "";
-		customerLastName = "";
-		document.getElementById("customerLastName").value = "";
-		customerAddress = "";
-		document.getElementById("customerAddress").value = "";
-		customerCity = "";
-		document.getElementById("customerCity").value = "";
-		customerState = "";
-		document.getElementById("customerState").value = "";
-		customerZip = "";
-		document.getElementById("customerZip").value = "";
-	}
-  </script>
-</body>
+            function getCustomer (key, cust) {
+                var allCustomers = cust.getCustomers();
+                var myCustomer = null;
+
+                // loop through all customers and log their info
+                console.log("[Customer - Get All Customers]");
+                for (var i = 0; i < allCustomers.length; i++) {
+                    var firstName = allCustomers[i].first_name;
+                    var lastName = allCustomers[i].last_name;
+                    console.log("Customer[" + i + "]: " + firstName + " " + lastName);
+
+                    // take note of the customer we created
+                    if(firstName == customerFirstName && lastName == customerLastName) {
+                        myCustomer = allCustomers[i];
+                    }
+                }
+
+                // display the customer we created
+                var fullName = myCustomer.first_name + " " + myCustomer.last_name
+                console.log("[Customer - My Customer] " + fullName);
+                $('#getCustomer').html("Results: <b>" + allCustomers.length + "</b>" + " customers retrieved, please see developer console for full list.<br/>");
+                $('#getCustomer').append("My Customer: <b>" + fullName + "</b>");
+            }
+
+            function submit() {
+                customerFirstName = document.getElementById("customerFirstName").value;
+                customerLastName = document.getElementById("customerLastName").value;
+                var temp = document.getElementById("customerAddress").value.split(" ");
+                customerStreetNumber = temp[0];
+                i = 1;
+                while(i < temp.length) {
+                    customerStreetName += temp[i];
+                    i++;
+                }
+                customerCity = document.getElementById("customerCity").value;
+                customerState = document.getElementById("customerState").value;
+                customerZip = document.getElementById("customerZip").value;
+               
+                // make the API Calls
+                postCustomer(apiKey, cust);
+                getCustomer(apiKey, cust);
+                clearFields();
+            }
+            function clearFields(){
+                customerFirstName = "";
+                document.getElementById("customerFirstName").value = "";
+                customerLastName = "";
+                document.getElementById("customerLastName").value = "";
+                customerAddress = "";
+                document.getElementById("customerAddress").value = "";
+                customerCity = "";
+                document.getElementById("customerCity").value = "";
+                customerState = "";
+                document.getElementById("customerState").value = "";
+                customerZip = "";
+                document.getElementById("customerZip").value = "";
+            }
+        </script>
+    </body>
 </html>
