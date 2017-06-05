@@ -4,8 +4,6 @@
         <title>Create Account</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <style>
             body {font-family: 'Helvetica', 'Arial'}
             div {font-family: 'Arial', 'Courier New'}
@@ -29,17 +27,73 @@
             <h3>Create an Account</h3>
             
             Customer ID: <br>
-            <input type="text" id="customerID">
+            <input type="text" id="customerID" value="5934dd81ceb8abe24250e0ca">
             <br>Account Type: <br>
-            <input type="text" id="accountType">
+            <input type="text" id="accountType" value="Credit Card">
             <br>Account nickname: <br>
-            <input type="text" id="accountNickname">
+            <input type="text" id="accountNickname" value="Test">
             <br>Rewards: <br>
-            <input type="text" id="accountRewards">
+            <input type="text" id="accountRewards" value="0">
             <br>Balance: <br>
-            <input type="text" id="accountBalance">
+            <input type="text" id="accountBalance" value="0">
             <br>Account Number(optional): <br>
-            <input type="text" id="accountNumber">
+            <input type="text" id="accountNumber" value="1111111111111111">
+            <br><br>
+            <button onclick="submit()">submit</button>
         </div>
+        <div id="getAccount"></div>
+        <!--Javascript-->
+        <script type="text/javascript">
+            var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
+            var acc;
+            //Global Variables
+            var customerID, accountType, accountNickname, accountRewards, accountBalance, accountNumber;
+
+            $(function() {
+                require(['account'], function (account) {
+                    //initialize a account 
+                    acc = account.initWithKey(apiKey);
+                });
+            });
+            
+            function postAccount(key, account) {
+                var payload = "{ \"type\": \""+accountType+"\", \"nickname\": \""+accountType+"\", \"rewards\": "+accountRewards+", \"balance\": "+accountBalance +", \"account_number\": \""+accountNumber+"\" }";
+                var responseCode = acc.createAccount(customerID, payload);
+                
+                if(responseCode == 201)
+                    $('#getAccount').html("Successfully Created Account");
+                else if (responseCode == 400)
+                    $('#getAccount').html("Failed to create Account");
+                //TODO: Better Error handling and response
+            }
+
+            function submit() {
+
+                customerID = document.getElementById("customerID").value;
+                accountType = document.getElementById("accountType").value;
+                accountNickname = document.getElementById("accountNickname").value;
+                accountRewards = parseInt(document.getElementById("accountRewards").value);
+                accountBalance = parseInt(document.getElementById("accountBalance").value);
+                accountNumber = document.getElementById("accountNumber").value;
+
+                postAccount(apiKey, acc);
+                clearFields();
+            }
+            
+            function clearFields() {
+                customerID = "";
+                document.getElementById("customerID").value = "";
+                accountType = "";
+                document.getElementById("accountType").value = "";
+                accountNickname = "";
+                document.getElementById("accountNickname").value = "";
+                accountRewards = "";
+                document.getElementById("accountRewards").value = "";
+                accountBalance = "";
+                document.getElementById("accountBalance").value = "";
+                accountNumber = "";
+                document.getElementById("accountNumber").value = "";
+            }    
+        </script>
     </body>
 </html>
