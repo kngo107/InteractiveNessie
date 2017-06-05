@@ -5,8 +5,6 @@
         <!-- Nessie Required Files -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <!-- Some Basic Stylin' -->
         <style>
             body {
@@ -15,7 +13,7 @@
             div {
                 font-family: 'Arial', 'Courier New'
             }
-            #customer_fields: {
+            #customer_fields {
                 margin-left:20px;
             }
         </style>
@@ -62,7 +60,7 @@
         <!-- API Call Examples -->
         <script type="text/javascript">
             var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
-
+            var cust;
             //Global Variables
             var customerFirstName;
             var customerLastName;
@@ -71,7 +69,6 @@
             var customerState;
             var customerState;
             var customerZip;
-
 
             $(function() {
                 // set the modules being used
@@ -85,8 +82,7 @@
 
             function postCustomer (key, cust) {
                 // build customer data
-                var newCustDetails ="{ \"first_name\": \"" + customerFirstName + "\", \"last_name\": \"" + customerLastName + "\", \"address\": { \"street_number\": \"" +customerStreetNumber+"\", \"street_name\": \"" +customerStreetName+"\", \"city\": \""+customerCity+"\", \"state\": \""+customerState+"\", \"zip\": \""+customerZip+"\" } }";
-
+                var newCustDetails = "{ \"first_name\": \"" + customerFirstName + "\", \"last_name\": \"" + customerLastName + "\", \"address\": { \"street_number\": \"" +customerStreetNumber+"\", \"street_name\": \"" +customerStreetName+"\", \"city\": \""+customerCity+"\", \"state\": \""+customerState+"\", \"zip\": \""+customerZip+"\" } }";
                 // make the API call, returns response code
                 var responseCode = cust.createCustomer(newCustDetails);
 
