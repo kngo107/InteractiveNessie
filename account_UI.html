@@ -57,7 +57,7 @@
             });
             
             function postAccount(key, account) {
-                var payload = "{ \"type\": \""+accountType+"\", \"nickname\": \""+accountType+"\", \"rewards\": "+accountRewards+", \"balance\": "+accountBalance +", \"account_number\": \""+accountNumber+"\" }";
+                var payload = "{ \"type\": \""+accountType+"\", \"nickname\": \""+accountNickname+"\", \"rewards\": "+accountRewards+", \"balance\": "+accountBalance +", \"account_number\": \""+accountNumber+"\" }";
                 var responseCode = acc.createAccount(customerID, payload);
                 
                 if(responseCode == 201)
