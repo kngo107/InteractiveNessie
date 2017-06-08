@@ -1,33 +1,92 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Customer Information</title>
-         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
         <style>
-            body {font-family: 'Helvetica', 'Arial'}
-            div {font-family: 'Arial', 'Courier New'}
-            #account_fields {
-                margin-left:20px;                                                      }
+body {font-family: 'Helvetica', 'Arial'}
+div {font-family: 'Arial', 'Courier New'}
+#account_fields {
+    margin-left:20px;                                                      }
         </style>
     </head>
     <body>
         <div style="color:white;background-color:#07044F;">
             <br>
-            <h1>Trying to get a Job at Cap One</h1>
+            <h1>Trying to get a Job</h1>
             <ul class="nav nav-tabs">
                 <li><a href="./customer_UI.html">Customer</a></li>
                 <li><a href="./account_UI.html">Account</a></li>
                 <li class="active"><a href="#">Info</a></li>
             </ul>
         </div>
-        <div id="displayCust">
-            #TODO: Implement display customer infromation here
-        </div>
-        <div id="displayAcc">
-            #TODO: Implement display customer's account information when clicked
-        </div>
-    </body>
-    
 
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" href="#collapse1">Customer1</a>
+                    </h4>
+                </div>
+                <div id="customer-container">
+                    <div id="collapse1" class="panel-collapse collapse">
+                        <ul class="list-group">
+                            <li class="list-group-item">Account Info 1</li>
+                            <li class="list-group-item">Account Info 2</li>
+                            <li class="list-group-item">Account Info 3</li>
+                        </ul>
+                    </div>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse2">Customer2</a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse">
+                        <ul class="list-group">
+                            <li class="list-group-item">Account Info 1</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <button onclick="getAccountById()">Submit</button>
+        <script type="text/javascript">
+            //TODO: Customers and accounts associated has to be dynmically rendered
+            //Look into ReactJS?
+            var id;
+            var acc;
+            var cust;
+            var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
+            $(function() {
+                require(['customer'], function (customer) {
+                    cust = customer.initWithKey(apiKey);
+                    getCustomer(apiKey, cust);
+                });
+                require(['account'], function (account) {
+                    acc = account.initWithKey(apiKey);
+                });
+            });
+
+            function getCustomer(key, cust) {
+                var allCustomers = cust.getCustomers();
+                id = allCustomers[0]._id;
+                console.log("ID " + id);
+                for(var i = 0; i < allCustomers.length; i++) {
+                    console.log(allCustomers[i]);
+                }
+            }
+            //
+            function getAccountById() {
+                id = "{ \""+id+"\" }";
+                console.log(id);
+                console.log("Customer ID: "+acc.getAllAccounts()[0]._id);
+                console.log(acc.getAccountById("56c66be6a73e492741507e24"));
+                
+            }
+        </script>
+    </body>
 </html>

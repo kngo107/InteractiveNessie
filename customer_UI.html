@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Nessie | Create a Customer</title>
+        <title>Create a Customer</title>
         <!-- Nessie Required Files -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
@@ -23,11 +23,10 @@
         <!--Menu Items-->
         <div style="color:white;background-color:blue;">
             <br>
-            <h1>Trying to get a Job at Cap One</h1>
+            <h1>Trying to get a Job</h1>
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#" style="color:black;">Customer</a></li>
                 <li><a href="./account_UI.html">Account</a></li>
-                <li><a href="#">Purchases</a></li>
                 <li><a href="./info.html">Info</a></li>
             </ul>
         </div>
@@ -115,7 +114,9 @@
                 var fullName = myCustomer.first_name + " " + myCustomer.last_name
                 console.log("[Customer - My Customer] " + fullName);
                 $('#getCustomer').html("Results: <b>" + allCustomers.length + "</b>" + " customers retrieved, please see developer console for full list.<br/>");
-                $('#getCustomer').append("My Customer: <b>" + fullName + "</b>");
+                $('#getCustomer').append("My Customer: <b>" + fullName + "</b><br />");
+                console.log("Customer ID: " + myCustomer._id);
+                $('#getCustomer').append("Customer ID: <b>"+ myCustomer._id+"</b>");
             }
 
             function submit() {
