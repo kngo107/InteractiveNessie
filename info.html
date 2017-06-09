@@ -9,8 +9,11 @@
         <style>
 body {font-family: 'Helvetica', 'Arial'}
 div {font-family: 'Arial', 'Courier New'}
-#account_fields {
-    margin-left:20px;                                                      }
+#info-panel {
+    margin-left:20px;
+    margin-right:20px;
+    margin-top:20px;
+    }
         </style>
     </head>
     <body>
@@ -24,17 +27,17 @@ div {font-family: 'Arial', 'Courier New'}
             </ul>
         </div>
 
-        <div class="panel-group">
+        <div class="panel-group" id="info-panel">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#collapse1">Customer1</a>
+                        <a data-toggle="collapse" href="#collapse1" id="customer1">Customer1</a>
                     </h4>
                 </div>
                 <div id="customer-container">
                     <div id="collapse1" class="panel-collapse collapse">
                         <ul class="list-group">
-                            <li class="list-group-item">Account Info 1</li>
+                            <li class="list-group-item" id="account1">Account Info 1</li>
                             <li class="list-group-item">Account Info 2</li>
                             <li class="list-group-item">Account Info 3</li>
                         </ul>
@@ -53,7 +56,6 @@ div {font-family: 'Arial', 'Courier New'}
                 </div>
             </div>
         </div>
-        <button onclick="getAccountById()">Submit</button>
         <script type="text/javascript">
             //TODO: Customers and accounts associated has to be dynmically rendered
             //Look into ReactJS?
@@ -68,6 +70,7 @@ div {font-family: 'Arial', 'Courier New'}
                 });
                 require(['account'], function (account) {
                     acc = account.initWithKey(apiKey);
+		    getAccountById();
                 });
             });
 
@@ -77,15 +80,16 @@ div {font-family: 'Arial', 'Courier New'}
                 console.log("ID " + id);
                 for(var i = 0; i < allCustomers.length; i++) {
                     console.log(allCustomers[i]);
+		    //TODO: Dynamically Create Customer indexes
+		    $('#customer1').text(allCustomers[0]._id + " " + allCustomers[0].first_name + " " + allCustomers[0].last_name);
                 }
             }
-            //
+            
             function getAccountById() {
-                id = "{ \""+id+"\" }";
                 console.log(id);
-                console.log("Customer ID: "+acc.getAllAccounts()[0]._id);
-                console.log(acc.getAccountById("56c66be6a73e492741507e24"));
-                
+                console.log(acc.getAllByCustomerId(id));
+		//TODO: Dynamically create Account customer tabs
+                $('#account1').text(acc.getAllByCustomerId(id)[0].nickname);
             }
         </script>
     </body>
