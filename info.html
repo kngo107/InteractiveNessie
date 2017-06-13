@@ -27,33 +27,12 @@ div {font-family: 'Arial', 'Courier New'}
             </ul>
         </div>
 
-        <div class="panel-group" id="info-panel">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#collapse1" id="customer1">Customer1</a>
-                    </h4>
-                </div>
-                <div id="customer-container">
-                    <div id="collapse1" class="panel-collapse collapse">
-                        <ul class="list-group">
-                            <li class="list-group-item" id="account1">Account Info 1</li>
-                            <li class="list-group-item">Account Info 2</li>
-                            <li class="list-group-item">Account Info 3</li>
-                        </ul>
-                    </div>
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" href="#collapse2">Customer2</a>
-                        </h4>
-                    </div>
-                    <div id="collapse2" class="panel-collapse collapse">
-                        <ul class="list-group">
-                            <li class="list-group-item">Account Info 1</li>
-                        </ul>
-                    </div>
+        <div class="panel-group">
+            <div class="panel panel-default" id="info-panel">
 
-                </div>
+                
+            
+
             </div>
         </div>
         <script type="text/javascript">
@@ -66,31 +45,75 @@ div {font-family: 'Arial', 'Courier New'}
             $(function() {
                 require(['customer'], function (customer) {
                     cust = customer.initWithKey(apiKey);
-                    getCustomer(apiKey, cust);
                 });
                 require(['account'], function (account) {
                     acc = account.initWithKey(apiKey);
-		    getAccountById();
+                    update(cust, acc);
+
                 });
+                
             });
 
-            function getCustomer(key, cust) {
-                var allCustomers = cust.getCustomers();
-                id = allCustomers[0]._id;
-                console.log("ID " + id);
-                for(var i = 0; i < allCustomers.length; i++) {
-                    console.log(allCustomers[i]);
-		    //TODO: Dynamically Create Customer indexes
-		    $('#customer1').text(allCustomers[0]._id + " " + allCustomers[0].first_name + " " + allCustomers[0].last_name);
-                }
-            }
+            /*
+             * Updates the 
+             *
+             */
+            function update(cust, acc) {
             
-            function getAccountById() {
-                console.log(id);
-                console.log(acc.getAllByCustomerId(id));
-		//TODO: Dynamically create Account customer tabs
-                $('#account1').text(acc.getAllByCustomerId(id)[0].nickname);
-            }
+                var allCustomers = cust.getCustomers();
+                for(var i=0; i<allCustomers.length; i++) {
+                    var list = document.getElementById('info-panel');
+                    var item = document.createElement("div");
+                    var att1 = document.createAttribute("class");
+                    att1.value = "panel-heading";
+                    item.setAttributeNode(att1);
+                    var heading = document.createElement("h4");
+                    var att2 = document.createAttribute("class");
+                    att2.value="panel-title";
+                    heading.setAttributeNode(att2);
+                    var anchor = document.createElement("a");
+                    var att3 = document.createAttribute("data-toggle");
+                    var att4 = document.createAttribute("href");
+                    var t = document.createTextNode(allCustomers[i]._id + " " + allCustomers[i].first_name); //Text here
+                    att3.value = "collapse";
+                    att4.value= "#collapse"+i;
+                    anchor.appendChild(t);
+                    anchor.setAttributeNode(att3);
+                    anchor.setAttributeNode(att4);
+                    heading.appendChild(anchor);
+                    item.appendChild(heading);
+                    list.appendChild(item);
+                   
+                    var id = allCustomers[i]._id;
+                    console.log(id);
+                    var accountsById = acc.getAllByCustomerId(id);
+                    
+                    var subContainer = document.createElement("div");
+                    var subId = document.createAttribute("id");
+                    var subClass1 = document.createAttribute("class");
+                    subId.value = "collapse"+i;
+                    subClass1.value = "panel-collapse collapse";
+                    subContainer.setAttributeNode(subId);
+                    subContainer.setAttributeNode(subClass1);
+                    var accountList = document.createElement("ul");
+                    var subAtt = document.createAttribute("class");
+                    subAtt.value = "list-group";
+                    accountList.setAttributeNode(subAtt);
+                    subContainer.appendChild(accountList);
+                    list.appendChild(subContainer);                     
+
+                    
+                    for(var j = 0; j < accountsById.length; j ++) {
+                        var subItem = document.createElement("li");
+                        var itemAtt = document.createAttribute("class");
+                        var itemText = document.createTextNode(accountsById[j].nickname);
+                        itemAtt.value = "list-group-item";
+                        subItem.appendChild(itemText);
+                        subItem.setAttributeNode(itemAtt);
+                        accountList.appendChild(subItem);
+                    }
+                }
+            }  
         </script>
     </body>
 </html>
