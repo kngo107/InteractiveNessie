@@ -20,6 +20,8 @@
                 <li><a href="./customer_UI.html">Customer</a></li>
                 <li class="active"><a href="#">Account</a></li>
                 <li><a href="./info.html">Info</a></li>
+                <li><a href="./purchase_UI.html">Purchases</a></li>
+
             </ul>
         </div>
 
@@ -28,17 +30,17 @@
             <h3>Create an Account</h3>
             
             Customer ID: <br>
-            <input type="text" id="customerID">
+            <input type="text" id="customerID" required>
             <br>Account Type: <br>
-            <input type="text" id="accountType" value="Credit Card">
+            <input type="text" id="accountType" required>
             <br>Account nickname: <br>
-            <input type="text" id="accountNickname" value="Test">
+            <input type="text" id="accountNickname" required>
             <br>Rewards: <br>
-            <input type="text" id="accountRewards" value="0">
+            <input type="text" id="accountRewards" required>
             <br>Balance: <br>
-            <input type="text" id="accountBalance" value="0">
+            <input type="text" id="accountBalance" required>
             <br>Account Number(optional): <br>
-            <input type="text" id="accountNumber" value="1111111111111111">
+            <input type="text" id="accountNumber" placeholder="Must be 16 digits">
             <br><br>
             <button onclick="submit()">submit</button>
         </div>
