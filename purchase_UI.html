@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Create an Account</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
+        <style>
+            body {font-family: 'Helvetica', 'Arial'}
+            div {font-family: 'Arial', 'Courier New'}
+            table, th, td {
+                border: 1px solid black;
+                padding: 0px 6px;
+            }
+            #account_fields {
+                margin-left:20px;
+            }
+            #page-content{
+                margin: 20px;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div style="color:white;background-color:#07044F;">
+            <br>
+            <h1>Trying to get a Job</h1>
+            <ul class="nav nav-tabs">
+                <li><a href="./customer_UI.html">Customer</a></li>
+                <li><a href="./account_UI.html">Account</a></li>
+                <li><a href="./info.html">Info</a></li>
+                <li class="active"><a href="#">Purchases</a></li>
+            </ul>
+        </div>
+        <div id="page-content">
+            <p>Enter your customer ID number:</p>
+            <input type="text" required>
+            <button type="submit">Submit</button><br>
+            <p>Choose an account:</p>
+            <select>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Checking">Checking Account</option>
+                <option value="Savings">Savings Account</option>
+            </select><br>
+            <p>Purchases:</p>
+            <table>
+                <tr>
+                    <th>Merchant ID</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Description</th> 
+                </tr>
+                <tr>
+                    <td>Target</td>
+                    <td>6/12/17</td>
+                    <td>$16.27</td>
+                    <td>Earbuds</td>
+                </tr>
+                <tr>
+                    <td>Giant</td>
+                    <td>6/13/17</td>
+                    <td>$31.03</td>
+                    <td>Groceries</td>
+                </tr>
+            </table>
+
+
+
+
+
+
+
+        </div>
+    </body>
+</html>
