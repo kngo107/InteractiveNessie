@@ -6,12 +6,11 @@ Tomek:
 - [X] Set up github in your machine and clone this repo. Then read through the code, make sure you have an idea. Then, try to run the code and play around with it.
 - [X] In this [Link](http://api.reimaginebanking.com/documentation#!/Account/get_accounts_id), implement POST (Create an account) under Account.
 - [ ] Understand html, css, javascript
-- [ ] Implement functionality for dynamic customer listing
 - [ ] Setup transaction tab page: Create Merchants and create purchases
 
 Alan:
 - [X] Implement PUT and DELETE under accounts 
-- [ ] Implement functionality for info.html
+- [X] Implement dynamic listing for info.html
 - [ ] Setup transaction page: Create Merchants and create Purchases
 - [ ] Use d3 to visualize using Bubble chart, a customer's most frequent purchase from a Merchant
 
