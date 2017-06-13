@@ -32,7 +32,11 @@
             Customer ID: <br>
             <input type="text" id="customerID" required>
             <br>Account Type: <br>
-            <input type="text" id="accountType" required>
+            <select id="accountType">
+                <option value="Checking">Checking</option>
+                <option value="Savings">Savings</option>
+                <option value="Credit Card">Credit Card</option>
+            </select>
             <br>Account nickname: <br>
             <input type="text" id="accountNickname" required>
             <br>Rewards: <br>
@@ -73,7 +77,8 @@
             function submit() {
 
                 customerID = document.getElementById("customerID").value;
-                accountType = document.getElementById("accountType").value;
+                var e = document.getElementById("accountType");
+                accountType = e.options[e.selectedIndex].value;
                 accountNickname = document.getElementById("accountNickname").value;
                 accountRewards = parseInt(document.getElementById("accountRewards").value);
                 accountBalance = parseInt(document.getElementById("accountBalance").value);
@@ -86,8 +91,6 @@
             function clearFields() {
                 customerID = "";
                 document.getElementById("customerID").value = "";
-                accountType = "";
-                document.getElementById("accountType").value = "";
                 accountNickname = "";
                 document.getElementById("accountNickname").value = "";
                 accountRewards = "";
