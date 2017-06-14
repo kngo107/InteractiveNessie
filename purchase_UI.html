@@ -1,67 +1,93 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Create an Account</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
-        <style>
-            body {font-family: 'Helvetica', 'Arial'}
-            div {font-family: 'Arial', 'Courier New'}
-            table, th, td {
-                border: 1px solid black;
-                padding: 0px 6px;
-            }
-            #account_fields {
-                margin-left:20px;
-            }
-            #page-content{
-                margin: 20px;
-            }
-            
-        </style>
-    </head>
-    <body>
-        <div style="color:white;background-color:#07044F;">
-            <br>
-            <h1>Trying to get a Job</h1>
-            <ul class="nav nav-tabs">
-                <li><a href="./customer_UI.html">Customer</a></li>
-                <li><a href="./account_UI.html">Account</a></li>
-                <li><a href="./info.html">Info</a></li>
-                <li class="active"><a href="#">Purchases</a></li>
-            </ul>
-        </div>
-        <div id="page-content">
-            <p>Enter your customer ID number:</p>
-            <input type="text" required>
-            <button type="submit">Submit</button><br>
-            <p>Choose an account:</p>
-            <select>
-                <option value="Credit Card">Credit Card</option>
-                <option value="Checking">Checking Account</option>
-                <option value="Savings">Savings Account</option>
-            </select><br>
-            <p>Purchases:</p>
-            <table>
-                <tr>
-                    <th>Merchant ID</th>
-                    <th>Date</th>
-                    <th>Amount</th>
-                    <th>Description</th> 
-                </tr>
-                <tr>
-                    <td>Target</td>
-                    <td>6/12/17</td>
-                    <td>$16.27</td>
-                    <td>Earbuds</td>
-                </tr>
-                <tr>
-                    <td>Giant</td>
-                    <td>6/13/17</td>
-                    <td>$31.03</td>
-                    <td>Groceries</td>
-                </tr>
-            </table>
+<head>
+<title>Create an Account</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
+<style>
+body {font-family: 'Helvetica', 'Arial'}
+div {font-family: 'Arial', 'Courier New'}
+
+#page-content{
+    margin: 20px;
+}
+
+</style>
+</head>
+<body>
+<div style="color:white;background-color:#07044F;">
+    <br>
+    <h1>Trying to get a Job</h1>
+    <ul class="nav nav-tabs">
+        <li><a href="./customer_UI.html">Customer</a></li>
+        <li><a href="./account_UI.html">Account</a></li>
+        <li><a href="./info.html">Info</a></li>
+        <li class="active"><a href="#">Purchases</a></li>
+    </ul>
+</div>
+<div id="page-content">
+    <div style="background-color: lightgray;">
+    <h3>This Section Implemented Later:</h3>
+    <form>
+        <p>Enter your customer ID number:</p>
+        <input id="customer-id-input" type="text" required>
+        <button class="btn" type="submit" onclick="getAllByCustomerId();">Submit</button><br>
+    </form>
+    <p>Choose an account:</p>
+    <select>
+        <option value="">Select Account</option>
+        <option value="Credit Card">Credit Card</option>
+        <option value="Checking">Checking Account</option>
+        <option value="Savings">Savings Account</option>
+    </select>
+    </div><hr>
+    <div id="new-purchase">
+        <h3 class="medium">New Purchase:</h3>
+        <p>Enter Merchant ID:</p>
+        <input id="customer-id-input" type="text" required><br/>
+        <p>Enter amount:</p>
+        <input id="customer-id-input" type="text" required><br/>
+        <p>Enter item description</p>
+        <input id="customer-id-input" type="text" required><br/>
+        <button style="margin-top: 6px;" class="btn" type="submit">Create New Purchase</button>
+    </div><hr/>
+    <div id="new-merchant">
+        <h3 class="medium">New Merchant:</h3>
+        <p>Enter name of merchant:</p>
+        <input id="customer-id-input" type="text" required><br/>
+        <p>Enter merchant category:</p>
+        <input id="customer-id-input" type="text" required><br/>
+        <button style="margin-top: 6px;" class="btn" type="submit">Create New Merchant</button>
+    </div>
+
+
+
+</div>
+<script>
+$(function(){
+        require(['account'], function([account) {
+            var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
+            var accounts = account.initWithKey(apikey);
+            var customerId = getFirstCustomerId(accounts);
+
+            var samplePurchase = '{ "merchant_id": "55e94a6cf8d8770528e6196d", "medium": "balance", "purchase_date": "2015-12-02", "amount": 0, "status": "pending", "description": "string" }';
+            var samplePurchaseUpdate = '{ "payer_id": "string", "medium": "balance", "amount": 0, "description": "string" }';
+
+            examplefunc(apikey, account);
+            });
+
+        require(['purchase', 'account', 'merchant'], function([purchase, account, merchant) {
+            var apikey = ''
+            var purchases = purchase.initWithKey(apikey);
+            var accounts = account.initWithKey(apikey);
+            var merchants = merchant.initWithKey(apikey);
+
+            var samplePurchase = '{ "merchant_id": "55e94a6cf8d8770528e6196d", "medium": "balance", "purchase_date": "2015-12-02", "amount": 0, "status": "pending", "description": "string" }';
+            var samplePurchaseUpdate = '{ "payer_id": "string", "medium": "balance", "amount": 0, "description": "string" }';
+
+            examplefunc(apikey, account);
+            });
+});
 
 
 
@@ -69,6 +95,20 @@
 
 
 
-        </div>
-    </body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
 </html>
