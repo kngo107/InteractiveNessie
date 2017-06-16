@@ -26,80 +26,127 @@ div {font-family: 'Arial', 'Courier New'}
     </ul>
 </div>
 <div id="page-content">
-    <div style="background-color: lightgray;">
+    <div>
     <h3>This Section Implemented Later:</h3>
     <form>
         <p>Enter your customer ID number:</p>
         <input id="customer-id-input" type="text" required>
-        <button class="btn" type="submit" onclick="getAllByCustomerId();">Submit</button><br>
+        <input type="button" class="btn" name="answer" value="Submit" onclick="displayAccounts()"/><br>
     </form>
+    <div id="account-select" style="display: none;">
     <p>Choose an account:</p>
-    <select>
+    <select id="account-select-options">
         <option value="">Select Account</option>
-        <option value="Credit Card">Credit Card</option>
-        <option value="Checking">Checking Account</option>
-        <option value="Savings">Savings Account</option>
+
     </select>
+    </div>
     </div><hr>
-    <div id="new-purchase">
+    <div id="new-purchase" style="display: none;">
         <h3 class="medium">New Purchase:</h3>
-        <p>Enter Merchant ID:</p>
-        <input id="customer-id-input" type="text" required><br/>
+        <p>Choose merchant:</p>
+        <select id="merchant-select-options">
+            <option value="">Select Merchant</option>
+        </select>
         <p>Enter amount:</p>
-        <input id="customer-id-input" type="text" required><br/>
+        <input id="amount-input" type="text" required><br/>
         <p>Enter item description</p>
-        <input id="customer-id-input" type="text" required><br/>
-        <button style="margin-top: 6px;" class="btn" type="submit">Create New Purchase</button>
-    </div><hr/>
+        <select id="description-input">
+            <option value="">Select Account</option>
+            <option value="Food">Food</option>
+            <option value="Gas">Gas</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Hobby">Hobby</option>
+        </select><br/>
+        <button style="margin-top: 6px;" class="btn" type="submit" onClick="submitPurchase()">Create New Purchase</button> 
+    <hr/></div>
     <div id="new-merchant">
         <h3 class="medium">New Merchant:</h3>
         <p>Enter name of merchant:</p>
-        <input id="customer-id-input" type="text" required><br/>
+        <input id="merchant-name-input" type="text" required><br/>
         <p>Enter merchant category:</p>
-        <input id="customer-id-input" type="text" required><br/>
-        <button style="margin-top: 6px;" class="btn" type="submit">Create New Merchant</button>
+        <input id="merchant-category-input" type="text" required><br/>
+        <button style="margin-top: 6px;" class="btn" type="submit" onclick="submitMerchant()">Create New Merchant</button>
     </div>
 
 
 
 </div>
 <script>
+
+var accountID;
+var merchantID;
+var customerID;
+var amount;
+var description;
+var merchantName;
+var merchCategory;             
+var accounts, merchants, purchases;
+
 $(function(){
-        require(['account'], function([account) {
-            var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
-            var accounts = account.initWithKey(apikey);
-            var customerId = getFirstCustomerId(accounts);
-
-            var samplePurchase = '{ "merchant_id": "55e94a6cf8d8770528e6196d", "medium": "balance", "purchase_date": "2015-12-02", "amount": 0, "status": "pending", "description": "string" }';
-            var samplePurchaseUpdate = '{ "payer_id": "string", "medium": "balance", "amount": 0, "description": "string" }';
-
-            examplefunc(apikey, account);
-            });
-
-        require(['purchase', 'account', 'merchant'], function([purchase, account, merchant) {
-            var apikey = ''
-            var purchases = purchase.initWithKey(apikey);
-            var accounts = account.initWithKey(apikey);
-            var merchants = merchant.initWithKey(apikey);
-
-            var samplePurchase = '{ "merchant_id": "55e94a6cf8d8770528e6196d", "medium": "balance", "purchase_date": "2015-12-02", "amount": 0, "status": "pending", "description": "string" }';
-            var samplePurchaseUpdate = '{ "payer_id": "string", "medium": "balance", "amount": 0, "description": "string" }';
-
-            examplefunc(apikey, account);
-            });
+    var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
+    require(['purchase', 'account', 'merchant'], function(purchase, account, merchant) {
+        accounts = account.initWithKey(apiKey);
+        merchants = merchant.initWithKey(apiKey);
+        purchases = purchase.initWithKey(apiKey);
+    });                       
 });
 
+function makeMerchantList(){
+    var merchantArray = merchants.getAll().data;
+    for(i=0; i < merchantArray.length; i++){
+        name = merchantArray[i].name;
+        iD = merchantArray[i]._id;
+        var merchItem = "<option value=" + iD + ">" + name + "</option>";
+        $('#merchant-select-options').append(merchItem);        
+    }
+}
 
+//Uses customer ID input to display related account options
+function displayAccounts(){
+    customerID = $('#customer-id-input').val();
+    clearAccountField();
+    var accountList = accounts.getAllByCustomerId(customerID);
+    for(i=0; i < accountList.length; i++){
+        type = accountList[i].type;
+        iD = accountList[i]._id;
+        var accItem = "<option value=" + iD + ">" + type + ": " + iD + "</option>";
+        $('#account-select-options').append(accItem);        
+    }
+    makeMerchantList();
+    document.getElementById('account-select').style.display = "block";
+    document.getElementById('new-purchase').style.display = "block";
 
+}
 
+//clears customer ID field and resets account options
+function clearAccountField(){
+    document.getElementById('account-select-options').length = 1;
+    document.getElementById('customer-id-input').value = "";
+}
 
+//creates a purchase
+function submitPurchase(){
+    accountID = $('#account-select-options').val();
+    merchantID = $('#merchant-select-options').val();
+    amount = $('#amount-input').val();
+    description = $('#description-input').val();
+    var purchaseJSON = '{ "merchant_id": "' + merchantID + '", "medium": "balance", "amount": ' + amount + ', "description": "' + description + '" }';
+    console.log(purchaseJSON);
+    var resp = purchases.createPurchase(accountID, purchaseJSON);
+    console.log("response code: " + resp);
+        
+}
 
-
-
-
-
-
-
+//creates a merchant (not working on API side)
+function submitMerchant(){
+    merchantName = $('#merchant-name-input').val();
+    merchCategory = $('#merchant-category-input').val();
+    
+    var merchantJSON = '{ "name": "' + merchantName + '", "category": ["'+ merchCategory + '"] }';
+    var resp = merchants.createMerchant(merchantJSON);
+    console.log("response code: " + resp);
+    console.log(merchants.getAll().data[0]._id);
+}
 
 
 
