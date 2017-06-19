@@ -16,10 +16,11 @@ Alan:
 
 IMPORTANT: PLEASE MAKE SURE YOUR CODE WORKS BEFORE PUSHING IT TO GITHUB AND GIT PULL FIRST BEFORE YOU PUSH
 
-<b>Git basics:</b>
-1. Always pull before you push
-2. git add <file> --> git commit -m "message" --> git push
-3. git status/ git checkout <file>
+<b>This the solution we found to fix our issue with running d3 webpages locally: </b>
+1. Load a webserver "python -m SimepleHTTPServer 8888 &" <br> OR install firefox to fix "Cross origin requests..."
+2. In chrome: "http://localhost:8888/d3test.html"
+3. To kill: ctrl + c <br> Check if process is killed: "ps -fA", kill <enter the pid of process here>
+
 <br />
 
 
