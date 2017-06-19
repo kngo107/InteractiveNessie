@@ -4,6 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Customer Information</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.2.2/d3.min.js"></script>
         <script data-main="lib/capital_one" src="lib/require-jquery.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
         <style>
@@ -13,7 +14,16 @@ div {font-family: 'Arial', 'Courier New'}
     margin-left:20px;
     margin-right:20px;
     margin-top:20px;
-    }
+}
+            .left {
+                float: left;
+            }
+            .w50 {
+                width: 50%;
+            }
+            svg {
+                background: #f1f1f1;
+            }
         </style>
     </head>
     <body>
@@ -28,94 +38,147 @@ div {font-family: 'Arial', 'Courier New'}
 
             </ul>
         </div>
-
-        <div class="panel-group">
-            <div class="panel panel-default" id="info-panel">
-
-                
-            
-
+        <div class="left w50">
+            <div class="panel-group">
+                <div class="panel panel-default" id="info-panel">
+                    <!--Customers and their Account Information Dynamically Listed in Here-->
+                </div>
             </div>
         </div>
+        <div class="left w50" style="margin-top:20px;">
+            <div id="chart"> </div>
+        </div>
+
+
+
         <script type="text/javascript">
-            //TODO: Customers and accounts associated has to be dynmically rendered
-            //Look into ReactJS?
-            var id;
-            var acc;
-            var cust;
-            var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
-            $(function() {
-                require(['customer'], function (customer) {
-                    cust = customer.initWithKey(apiKey);
-                });
-                require(['account'], function (account) {
-                    acc = account.initWithKey(apiKey);
-                    update(cust, acc);
+//TODO: Customers and accounts associated has to be dynmically rendered
+//Look into ReactJS?
+var id;
+var acc;
+var cust;
+var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
+(function() {
+    var width = 1000,
+    height = 1000;
 
-                });
-                
-            });
+    var svg = d3.select("#chart")
+        .append("svg")
+        .attr("height", height)
+        .attr("width", width)
+        .append("g")
+        .attr("transform", "translate(0,0)");
+    //.attr("transform", "translate("+ width/2+","+height/2+")")
+    var radiusScale = d3.scaleSqrt().domain([1, 500]).range([10, 80])
 
-            /*
-             * Updates the 
-             *
-             */
-            function update(cust, acc) {
-            
-                var allCustomers = cust.getCustomers();
-                for(var i=0; i<allCustomers.length; i++) {
-                    var list = document.getElementById('info-panel');
-                    var item = document.createElement("div");
-                    var att1 = document.createAttribute("class");
-                    att1.value = "panel-heading";
-                    item.setAttributeNode(att1);
-                    var heading = document.createElement("h4");
-                    var att2 = document.createAttribute("class");
-                    att2.value="panel-title";
-                    heading.setAttributeNode(att2);
-                    var anchor = document.createElement("a");
-                    var att3 = document.createAttribute("data-toggle");
-                    var att4 = document.createAttribute("href");
-                    var t = document.createTextNode(allCustomers[i]._id + " " + allCustomers[i].first_name); //Text here
-                    att3.value = "collapse";
-                    att4.value= "#collapse"+i;
-                    anchor.appendChild(t);
-                    anchor.setAttributeNode(att3);
-                    anchor.setAttributeNode(att4);
-                    heading.appendChild(anchor);
-                    item.appendChild(heading);
-                    list.appendChild(item);
-                   
-                    var id = allCustomers[i]._id;
-                    console.log(id);
-                    var accountsById = acc.getAllByCustomerId(id);
-                    
-                    var subContainer = document.createElement("div");
-                    var subId = document.createAttribute("id");
-                    var subClass1 = document.createAttribute("class");
-                    subId.value = "collapse"+i;
-                    subClass1.value = "panel-collapse collapse";
-                    subContainer.setAttributeNode(subId);
-                    subContainer.setAttributeNode(subClass1);
-                    var accountList = document.createElement("ul");
-                    var subAtt = document.createAttribute("class");
-                    subAtt.value = "list-group";
-                    accountList.setAttributeNode(subAtt);
-                    subContainer.appendChild(accountList);
-                    list.appendChild(subContainer);                     
+        var simulation = d3.forceSimulation()
+        .force("x", d3.forceX(width/2).strength(0.05))
+        .force("y", d3.forceY(height/2).strength(0.05))
+        .force("collide", d3.forceCollide(function(d) {
+            return radiusScale(d.frequency)
+        })) 
 
-                    
-                    for(var j = 0; j < accountsById.length; j ++) {
-                        var subItem = document.createElement("li");
-                        var itemAtt = document.createAttribute("class");
-                        var itemText = document.createTextNode(accountsById[j].nickname);
-                        itemAtt.value = "list-group-item";
-                        subItem.appendChild(itemText);
-                        subItem.setAttributeNode(itemAtt);
-                        accountList.appendChild(subItem);
-                    }
+    d3.queue()
+        .defer(d3.csv, "test.csv")
+        .await(ready)
+
+        function ready (error, datapoints) {
+            var circles = svg.selectAll(".merchant")
+                .data(datapoints)
+                .enter().append("circle")
+                .attr("class", "merchant")
+                .attr("r", function(d) {
+                    return radiusScale(d.frequency)
+                })
+            .attr("fill", "lightblue")
+
+                circles.append("text")
+                .attr("x", 0)
+                .attr("y", 0)
+                .text("Hello")
+
+                simulation.nodes(datapoints)
+                .on('tick', ticked)
+
+                function ticked() {
+                    circles
+                        .attr("cx", function(d) {
+                            return d.x
+                        })
+                    .attr("cy", function(d) {
+                        return d.y
+                    })
                 }
-            }  
+        }
+})();
+$(function() {
+    require(['customer', 'account'], function (customer, account) {
+        cust = customer.initWithKey(apiKey);
+        acc = account.initWithKey(apiKey);
+        update(cust, acc);
+    });
+});
+
+/*
+ * Updates the collapsable list 
+ *
+ */
+function update(cust, acc) {
+
+    var allCustomers = cust.getCustomers();
+    for(var i=0; i<allCustomers.length; i++) {
+        var list = document.getElementById('info-panel');
+        var item = document.createElement("div");
+        var att1 = document.createAttribute("class");
+        att1.value = "panel-heading";
+        item.setAttributeNode(att1);
+        var heading = document.createElement("h4");
+        var att2 = document.createAttribute("class");
+        att2.value="panel-title";
+        heading.setAttributeNode(att2);
+        var anchor = document.createElement("a");
+        var att3 = document.createAttribute("data-toggle");
+        var att4 = document.createAttribute("href");
+        var t = document.createTextNode(allCustomers[i]._id + " " + allCustomers[i].first_name); //Text here
+        att3.value = "collapse";
+        att4.value= "#collapse"+i;
+        anchor.appendChild(t);
+        anchor.setAttributeNode(att3);
+        anchor.setAttributeNode(att4);
+        heading.appendChild(anchor);
+        item.appendChild(heading);
+        list.appendChild(item);
+
+        var id = allCustomers[i]._id;
+        //console.log(id);
+        var accountsById = acc.getAllByCustomerId(id);
+
+        var subContainer = document.createElement("div");
+        var subId = document.createAttribute("id");
+        var subClass1 = document.createAttribute("class");
+        subId.value = "collapse"+i;
+        subClass1.value = "panel-collapse collapse";
+        subContainer.setAttributeNode(subId);
+        subContainer.setAttributeNode(subClass1);
+        var accountList = document.createElement("ul");
+        var subAtt = document.createAttribute("class");
+        subAtt.value = "list-group";
+        accountList.setAttributeNode(subAtt);
+        subContainer.appendChild(accountList);
+        list.appendChild(subContainer);                     
+
+
+        for(var j = 0; j < accountsById.length; j ++) {
+            var subItem = document.createElement("li");
+            var itemAtt = document.createAttribute("class");
+            var itemText = document.createTextNode(accountsById[j].nickname);
+            itemAtt.value = "list-group-item";
+            subItem.appendChild(itemText);
+            subItem.setAttributeNode(itemAtt);
+            accountList.appendChild(subItem);
+        }
+    }
+}  
         </script>
     </body>
 </html>
