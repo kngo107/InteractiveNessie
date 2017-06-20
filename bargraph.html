@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+    <head>
+        <title>D3 Bar graph</title>
+        <script src="http://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <body>
+        <br><br><br>
+    <script>
+        d3.csv("test.csv", function(data) {
+            var canvas = d3.select("body").append("svg")
+                .attr("width", 500)
+                .attr("height", 500)
+            canvas.selectAll("rect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("width", function(d) {
+                    return d.frequency * .7
+                })
+                .attr("height", 48)
+                .attr("y", function (d, i) {
+                    return i *50
+                })
+                .attr("fill", "blue")
+
+            canvas.selectAll("text")
+                .data(data)
+                .enter()
+                    .append("text")
+                    .attr("fill", "white")
+                    .attr("y", function(d, i) {
+                        return i*50 +24
+                    })
+                .text(function(d) {
+                    return d.merchant
+                })
+        })
+    </script>
+    </body>
+</html>
