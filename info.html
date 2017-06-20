@@ -59,9 +59,8 @@ var acc;
 var cust;
 var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
 (function() {
-    var width = 1000,
-    height = 1000;
-
+    var height = 500
+    var width = 500
     var svg = d3.select("#chart")
         .append("svg")
         .attr("height", height)
@@ -83,19 +82,27 @@ var apiKey = '1bfcda98388948a21e581a593a6dbb1e';
         .await(ready)
 
         function ready (error, datapoints) {
-            var circles = svg.selectAll(".merchant")
+            var node = svg.selectAll(".merchant")
                 .data(datapoints)
-                .enter().append("circle")
+                .enter().append("g")
+                
+            var circles = node.append("circle")
                 .attr("class", "merchant")
                 .attr("r", function(d) {
                     return radiusScale(d.frequency)
                 })
             .attr("fill", "lightblue")
 
-                circles.append("text")
-                .attr("x", 0)
-                .attr("y", 0)
-                .text("Hello")
+            var text = node.append("text")
+                .attr("dx", function(d) {
+                return d.x
+                })
+                .attr("dy", function(d) {
+                    return d.y
+                })
+                .text(function(d) {
+                    return d.merchant
+                })
 
                 simulation.nodes(datapoints)
                 .on('tick', ticked)
