@@ -21,9 +21,9 @@
 
     <body>
         <!--Menu Items-->
-        <div style="color:white;background-color:#07044F;">
+        <div style="background-image: linear-gradient( 180deg, #5EFCE8 0%, #736EFE 100%);">
             <br>
-            <h1>Trying to get a Job</h1>
+            <h1 style="text-align:center">Trying to get a Job</h1>
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#" style="color:black;">Customer</a></li>
                 <li><a href="./account_UI.html">Account</a></li>
@@ -37,24 +37,23 @@
             <h3>Create a Customer</h3>
 
             First Name: <br>
-            <input type="text" id="customerFirstName">
+            <input type="text" id="customerFirstName" required>
             <br>Last Name: <br>
-            <input type="text" id="customerLastName">
+            <input type="text" id="customerLastName" required>
             <br>Address<br>
-            <input type="text" id="customerAddress">
+            <input type="text" id="customerAddress" required>
             <br>City<br>
-            <input type="text" id="customerCity">
+            <input type="text" id="customerCity" required>
             <br>State<br>
-            <input type="text" id="customerState">
+            <input type="text" id="customerState" required>
             <br>Zip Code<br>
-            <input type="text" id="customerZip">
+            <input type="text" id="customerZip"required>
             <br><br>
             <button onclick="submit()">submit</button>
         </div>
 
         <div id="postCustomer"></div>
 
-        <h3>Retrieving a Customer</h3>
         <div id="getCustomer"></div>
 
         <!-- API Call Examples -->
@@ -113,10 +112,10 @@
 
                 // display the customer we created
                 var fullName = myCustomer.first_name + " " + myCustomer.last_name
-                console.log("[Customer - My Customer] " + fullName);
-                $('#getCustomer').html("Results: <b>" + allCustomers.length + "</b>" + " customers retrieved, please see developer console for full list.<br/>");
+                //console.log("[Customer - My Customer] " + fullName);
+                //$('#getCustomer').html("Results: <b>" + allCustomers.length + "</b>" + " customers retrieved, please see developer console for full list.<br/>");
                 $('#getCustomer').append("My Customer: <b>" + fullName + "</b><br />");
-                console.log("Customer ID: " + myCustomer._id);
+                //console.log("Customer ID: " + myCustomer._id);
                 $('#getCustomer').append("Customer ID: <b>"+ myCustomer._id+"</b>");
             }
 
@@ -137,6 +136,7 @@
                 // make the API Calls
                 postCustomer(apiKey, cust);
                 getCustomer(apiKey, cust);
+                window.location.replace("./account_UI.html");
                 clearFields();
             }
             function clearFields(){

@@ -11,12 +11,12 @@
             var canvas = d3.select("body").append("svg")
                 .attr("width", 500)
                 .attr("height", 500)
-            canvas.selectAll("rect")
+            var bars = canvas.selectAll("rect")
                 .data(data)
                 .enter()
                 .append("rect")
                 .attr("width", function(d) {
-                    return d.frequency * .7
+                    return d.frequency * .5
                 })
                 .attr("height", 48)
                 .attr("y", function (d, i) {
@@ -28,12 +28,22 @@
                 .data(data)
                 .enter()
                     .append("text")
-                    .attr("fill", "white")
+                    .attr("fill", "black")
                     .attr("y", function(d, i) {
                         return i*50 +24
                     })
+                    
                 .text(function(d) {
-                    return d.merchant
+                    return d.merchant + ", " + d.frequency
+                })
+            bars.transition()
+                .duration(1000)
+                .delay(100)
+                .attr("x", function(d) {
+                    return 500 - (d.frequency*.5)
+                })
+                .attr("width", function(d) {
+                    return d.frequency*.5
                 })
         })
     </script>

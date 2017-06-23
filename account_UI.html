@@ -13,9 +13,9 @@
         </style>
     </head>
     <body>
-        <div style="color:white;background-color:#07044F;">
+        <div style="background-image: linear-gradient( 180deg, #5EFCE8 0%, #736EFE 100%);">
             <br>
-            <h1>Trying to get a Job</h1>
+            <h1 style="text-align:center">Trying to get a Job</h1>
             <ul class="nav nav-tabs">
                 <li><a href="./customer_UI.html">Customer</a></li>
                 <li class="active"><a href="#">Account</a></li>
@@ -64,7 +64,14 @@
             });
             
             function postAccount(key, account) {
-                var payload = "{ \"type\": \""+accountType+"\", \"nickname\": \""+accountNickname+"\", \"rewards\": "+accountRewards+", \"balance\": "+accountBalance +", \"account_number\": \""+accountNumber+"\" }";
+                if(accountNumber != "") {
+                    var payload = "{ \"type\": \""+accountType+"\", \"nickname\": \""+accountNickname+"\", \"rewards\": "+accountRewards+", \"balance\": "+accountBalance +", \"account_number\": \""+accountNumber+"\" }";
+                }
+                else {
+                   var payload = "{ \"type\": \""+accountType+"\", \"nickname\": \""+accountNickname+"\", \"rewards\": "+accountRewards+", \"balance\": "+accountBalance +" }";
+
+                }
+                
                 var responseCode = acc.createAccount(customerID, payload);
                 
                 if(responseCode == 201)
@@ -83,7 +90,7 @@
                 accountRewards = parseInt(document.getElementById("accountRewards").value);
                 accountBalance = parseInt(document.getElementById("accountBalance").value);
                 accountNumber = document.getElementById("accountNumber").value;
-
+                
                 postAccount(apiKey, acc);
                 clearFields();
             }
