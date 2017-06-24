@@ -28,3 +28,9 @@ IMPORTANT: PLEASE MAKE SURE YOUR CODE WORKS BEFORE PUSHING IT TO GITHUB AND GIT 
 * Retrieve customer purchase information for data analytics
 * d3.js --> Visualize customers purchase data (i.e. Most visited store, most purchased category, etc.)
 * Refine design using Bootstrap
+
+<b>Helpful resources</b>
+* [w3Schools ](https://www.w3schools.com/html/ "HTML5 tutorial")
+* [Bootstrap cheat sheet](http://bootstrapbay.com/bootstrap4/?#ceva "Bootstrap CheatSheet")
+* [Color Gradients](https://webkul.github.io/coolhue/ "Color Gradients")
+* [Interactive Nessie](http://api.reimaginebanking.com/documentation "Hackathon API")
