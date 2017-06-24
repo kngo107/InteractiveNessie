@@ -12,8 +12,8 @@ Alan:
 - [X] Implement PUT and DELETE under accounts 
 - [X] Implement dynamic listing for info.html
 - [ ] Setup transaction page: Create Merchants and create Purchases
-- [ ] Use d3 to visualize using Bubble chart, a customer's most frequent purchase from a Merchant
-
+- [ ] Use d3 to visualize a customer's most frequent purchase from a Merchant
+- [ ] Redesign work flow of page
 IMPORTANT: PLEASE MAKE SURE YOUR CODE WORKS BEFORE PUSHING IT TO GITHUB AND GIT PULL FIRST BEFORE YOU PUSH
 
 <b>This the solution we found to fix our issue with running d3 webpages locally: </b>
@@ -25,6 +25,6 @@ IMPORTANT: PLEASE MAKE SURE YOUR CODE WORKS BEFORE PUSHING IT TO GITHUB AND GIT 
 
 
 <b>TODO:</b>
-* Retrieve customer information for data analytics
+* Retrieve customer purchase information for data analytics
 * d3.js --> Visualize customers purchase data (i.e. Most visited store, most purchased category, etc.)
-* Research how to make this cross platform compatible
+* Refine design using Bootstrap
